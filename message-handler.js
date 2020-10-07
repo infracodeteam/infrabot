@@ -1,5 +1,7 @@
 class MessageHandler {
-    constructor() {}
+    constructor(DBM) {
+        this.DBM = DBM;
+    }
     parseMessage(msg) {
         if (msg.channel == null || msg.author == null) return;
         let user_id = msg.author.id;
@@ -12,4 +14,4 @@ class MessageHandler {
         console.log('date :>> ', date);
     }
 }
-module.exports = new MessageHandler();
+module.exports = MessageHandler;

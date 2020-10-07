@@ -1,6 +1,7 @@
 class MaintenanceManager {
-    constructor () {
+    constructor (DBM) {
         console.log('maintenance-manager::starting manager');
+        this.DBM = DBM;
         this.client = null;
     }
     beginMaintenance(client) {
@@ -16,11 +17,9 @@ class MaintenanceManager {
         this.updateChannels();
     }
     updateUsers() {
-
     }
     updateChannels() {
-
     }
 }
 
-module.exports = new MaintenanceManager();
+module.exports = MaintenanceManager;
