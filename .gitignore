@@ -2,3 +2,4 @@ node_modules
 auth.json
 markdown_example.json
 examples
+infrabot.db

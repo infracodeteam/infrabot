@@ -1,3 +1,4 @@
+PRAGMA user_version=1;
 BEGIN TRANSACTION;
 
 CREATE TABLE "versions" (
