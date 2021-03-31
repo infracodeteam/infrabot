@@ -1,28 +1,40 @@
-const auth = require('./auth.json');
-const Discord = require('discord.js');
-const client = new Discord.Client();
-const MessageHandler = require('./message-handler');
-const MaintenanceManager = require('./maintenance-manager');
-const DBM = require('./sqlite_db');
-const msgHandler = new MessageHandler(DBM);
-const maintManager = new MaintenanceManager(DBM);
+const config = require("dotenv").config();
+const { App } = require('@slack/bolt');
 
-client.on('ready', () => {
-    console.log('client::ready');
-    client.user.setStatus('online');
-    client.user.setPresence({
-        activity: {
-            type: "UNDER",
-            name: 'CONSTRUCTION'
-        }
+const app = new App({
+  token: process.env.SLACK_BOT_TOKEN,
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
+  logLevel: process.env.SLACK_LOG_LEVEL,
+});
+
+// TODO: Set an interval to run @ 8am ET that saves this data somewhere and resets counts to 0 and empties user arrays.
+const posts = {};
+
+app.message(async ({ message, client }) => {
+  if (message.subtype !== "message") return;
+  if (posts[message.channel] == null) {
+    const channel_info = await client.conversations.info({
+      channel: message.channel
     });
+    posts[message.channel] = {count: 0, users: [], channel_name: channel_info.name || message.channel};
+  }
+  posts[message.channel].count++;
+  if (posts[message.channel].users.some(u => u === message.user) === false) {
+    posts[message.channel].users.push(message.user);
+  }
+  console.log(`posts`, posts);
+  // {
+  //   C01T0PLMGEL: { count: 4, users: [ 'U01CL9LQDEF', 'U01D8QYUW72' ], channel_name: 'C01T0PLMGEL' },
+  //   C01CAT52YVC: { count: 1, users: [ 'U01CL9LQDEF' ], channel_name: 'C01CAT52YVC' }
+  // }
+  
 });
 
-client.on('message', msg => {
-    console.log('client::message');
-    msgHandler.parseMessage(msg);
-});
+// app.event('team_join', async ({user, client}) => {
+//   newUserCount++;
+// });
 
-client.login(auth.discord_token);
-
-maintManager.beginMaintenance(client);
+(async () => {
+  await app.start(process.env.PORT || 3000);
+  console.log('⚡️ Slack bot (Bolt) app is running!');
+})();

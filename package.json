@@ -1,21 +1,19 @@
 {
-  "name": "infrabot",
-  "version": "1.0.0",
-  "description": "a bot to manage the infracode discord channel",
+  "name": "bolt-starter",
+  "version": "0.0.1",
+  "description": "Bolt app starter",
   "main": "index.js",
   "scripts": {
     "debug": "nodemon index.js",
     "start": "node index.js"
   },
-  "author": " <Bo Carey>",
+  "author": "@jellyfith",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^12.2.0",
-    "jquery": "^3.5.0",
-    "jsdom": "^16.2.2",
-    "sqlite3": "^5.0.0"
+    "@slack/bolt": "^3.3.0",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.4"
   }
 }

@@ -1,5 +1,5 @@
-node_modules
-auth.json
-markdown_example.json
-examples
-infrabot.db
+node_modules/
+tmp/
+.env
+.DS_Store
+.vscode/
