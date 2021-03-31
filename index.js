@@ -7,7 +7,7 @@ const app = new App({
   logLevel: process.env.SLACK_LOG_LEVEL,
 });
 
-// TODO: Set an interval to run @ 8am ET that saves this data somewhere and resets counts to 0 and empties user arrays.
+// TODO: Set an interval to run @ 8am ET that saves this data somewhere, then resets counts to 0 and empties user arrays.
 const posts = {};
 
 app.message(async ({ message, client }) => {
@@ -31,7 +31,7 @@ app.message(async ({ message, client }) => {
 });
 
 // app.event('team_join', async ({user, client}) => {
-//   newUserCount++;
+  // ...
 // });
 
 (async () => {
